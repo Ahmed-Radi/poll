@@ -3,27 +3,27 @@
     import { createEventDispatcher } from 'svelte'
     let dispatch = createEventDispatcher()
     import Button from '../shared/Button.svelte'
-    let filds = {question: '', answerA: '', answerB: ''}
+    let fields = {question: '', answerA: '', answerB: ''}
     let errors = {question: '', answerA: '', answerB: ''}
     let valid = false;
 
     const submitHandler = () => {
         valid = true;
-        if(filds.question.trim().length < 5) {
+        if(fields.question.trim().length < 5) {
             valid = false
             errors.question = 'Question must be at least 5 characters longs'
         } else {
             errors.question = ''
         }
 
-        if(filds.answerA.trim().length < 1) {
+        if(fields.answerA.trim().length < 1) {
             valid = false
             errors.answerA = "Answer A can't be empty"
         } else {
             errors.answerA = ''
         }
 
-        if(filds.answerB.trim().length < 1) {
+        if(fields.answerB.trim().length < 1) {
             valid = false
             errors.answerB = "Answer B can't be empty"
         } else {
@@ -32,7 +32,7 @@
 
         // add poll
         if (valid) {
-            let poll = {...filds, votesA: 0, votesB: 0, id: Math.random()}
+            let poll = {...fields, votesA: 0, votesB: 0, id: Math.random()}
             PollStore.update((currentPolls) => {
                 return [poll, ...currentPolls]
             })
@@ -41,22 +41,22 @@
     }
 </script>
 <form on:submit|preventDefault={submitHandler}>
-    <div class="form-fild">
+    <div class="form-field">
         <label for="question">Question</label>
-        <input type="text" id="question" placeholder="Question" bind:value={filds.question} />
+        <input type="text" id="question" placeholder="Question" bind:value={fields.question} />
         <div class="error">{errors.question}</div>
     </div>
-    <div class="form-fild">
+    <div class="form-field">
         <label for="answer-a">Answer A:</label>
-        <input type="text" id="answer-a" placeholder="Answer A" bind:value={filds.answerA} />
+        <input type="text" id="answer-a" placeholder="Answer A" bind:value={fields.answerA} />
         <div class="error">{errors.answerA}</div>
     </div>
-    <div class="form-fild">
-        <label for="anwser-b">Anwser B:</label>
-        <input type="text" id="anwser-b" placeholder="Answer B" bind:value={filds.answerB} />
+    <div class="form-field">
+        <label for="anwser-b">Answer B:</label>
+        <input type="text" id="anwser-b" placeholder="Answer B" bind:value={fields.answerB} />
         <div class="error">{errors.answerB}</div>
     </div>
-    <Button type="secondry" flat={true}>Add poll</Button>
+    <Button type="secondary" flat={true}>Add poll</Button>
 </form>
 <style>
     form {
@@ -64,14 +64,14 @@
         margin: 0 auto;
         text-align: center;
     }
-    .form-fild {
+    .form-field {
         margin-bottom: 0.8rem;
     }
-    .form-fild input {
+    .form-field input {
         width: 100%;
         border-radius: 0.3rem;
     }
-    .form-fild > label {
+    .form-field > label {
         margin-bottom: 0.8rem;
         text-align: left;
     }
